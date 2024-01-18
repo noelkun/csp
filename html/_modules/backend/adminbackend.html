@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>backend.adminbackend &mdash; FUTElibs:Library Management GUI APP 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FUTElibs:Library Management GUI APP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FUTElibs:Library Management GUI APP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">backend.adminbackend</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for backend.adminbackend</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Importing the necessary modules</span>
+<span class="kn">from</span> <span class="nn">backend.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<div class="viewcode-block" id="Get_book_table_data">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.Get_book_table_data">[docs]</a>
+<span class="k">def</span> <span class="nf">Get_book_table_data</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieves data from the book table where the holder is 0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of tuples containing the book id, name, and author.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span><span class="o">=</span><span class="kc">None</span>
+
+    <span class="n">sql</span><span class="o">=</span><span class="s1">&#39;select bid, name,author from book where holder=0&#39;</span>
+    <span class="n">result</span><span class="o">=</span><span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Connect to the database</span>
+        <span class="n">conn</span><span class="o">=</span><span class="n">Connect</span><span class="p">()</span>
+        <span class="n">cursor</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+        
+        <span class="c1"># Fetch all the rows from the query</span>
+        <span class="n">result</span><span class="o">=</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        
+        <span class="c1"># Close the cursor and connection</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Clean up variables</span>
+        <span class="k">del</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span>
+        
+        <span class="c1"># Return the result</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="check_bid">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.check_bid">[docs]</a>
+<span class="k">def</span> <span class="nf">check_bid</span><span class="p">(</span><span class="n">bid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check the availability of a book by its bid.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        bid (int): The ID of the book.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: A tuple containing the book&#39;s ID, name, and author if available, otherwise None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span><span class="o">=</span><span class="kc">None</span>
+
+    <span class="c1"># SQL query to fetch book details by bid</span>
+    <span class="n">sql</span><span class="o">=</span><span class="s1">&#39;select bid,name,author from book where bid=</span><span class="si">%s</span><span class="s1"> and holder=0&#39;</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">bid</span><span class="p">,)</span>
+    <span class="n">result</span><span class="o">=</span><span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Connect to the database</span>
+        <span class="n">conn</span><span class="o">=</span><span class="n">Connect</span><span class="p">()</span>
+        <span class="n">cursor</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        
+        <span class="c1"># Execute the SQL query with the provided bid</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        
+        <span class="c1"># Fetch the first row from the result</span>
+        <span class="n">result</span><span class="o">=</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        
+        <span class="c1"># Close the cursor and connection</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="c1"># Print the error message and stack trace</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Clean up variables</span>
+        <span class="k">del</span> <span class="n">values</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span>
+        
+        <span class="c1"># Return the result</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="remove_book">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.remove_book">[docs]</a>
+<span class="k">def</span> <span class="nf">remove_book</span><span class="p">(</span><span class="n">bid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove book from the database by setting the holder to -1.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bid (int): The ID of the book to be removed.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: If an error occurs while removing the book.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># SQL query to update the &#39;holder&#39; column of the &#39;book&#39; table</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;UPDATE book SET holder = -1 WHERE bid = </span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">bid</span><span class="p">,)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="c1"># Execute the SQL query with the given values</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+        <span class="c1"># Commit the changes to the database</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+        <span class="c1"># Close the cursor and connection</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="c1"># Print the error message and details</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Clean up variables</span>
+        <span class="k">del</span> <span class="n">values</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span></div>
+
+
+<div class="viewcode-block" id="add_book">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.add_book">[docs]</a>
+<span class="k">def</span> <span class="nf">add_book</span><span class="p">(</span><span class="n">bname</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add a book to the database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bname (str): The name of the book.</span>
+<span class="sd">        auth (str): The author of the book.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># SQL query to insert a new book into the &#39;book&#39; table</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;insert into book values(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">,0)&#39;</span>
+
+    <span class="c1"># Generate a new book ID by incrementing the maximum existing ID</span>
+    <span class="n">bid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxi</span><span class="p">()[</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">bname</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="c1"># Execute the SQL query and commit the changes to the database</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">values</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span></div>
+
+
+
+<span class="sd">&quot;&quot;&quot;employee dats&quot;&quot;&quot;</span>
+
+
+
+<div class="viewcode-block" id="Get_employee_table_data">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.Get_employee_table_data">[docs]</a>
+<span class="k">def</span> <span class="nf">Get_employee_table_data</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to retrieve employee table data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of tuples containing the employee data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;select eid, name, email from employee&#39;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">()</span>  <span class="c1"># Establish a connection to the database</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>  <span class="c1"># Create a cursor object to execute SQL statements</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>  <span class="c1"># Execute the SQL query</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>  <span class="c1"># Fetch all the rows returned by the query</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># Close the cursor</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># Close the connection</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>  <span class="c1"># Print the error message if an exception occurs</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span>  <span class="c1"># Delete the SQL query and connection objects</span>
+        <span class="k">return</span> <span class="n">result</span>  <span class="c1"># Return the result</span></div>
+
+
+<div class="viewcode-block" id="check_eid">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.check_eid">[docs]</a>
+<span class="k">def</span> <span class="nf">check_eid</span><span class="p">(</span><span class="n">eid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to check if an employee ID exists in the database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        eid (str): The employee ID to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: A tuple containing the employee&#39;s ID, name, and email if found, otherwise None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># SQL query to select employee information from the database</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;select eid, name, email from employee where eid=</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">eid</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="c1"># Execute the SQL query</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+        <span class="c1"># Fetch the first row of the result</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">values</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span>
+
+        <span class="c1"># Return the result</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+
+
+
+
+<div class="viewcode-block" id="remove_employee">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.remove_employee">[docs]</a>
+<span class="k">def</span> <span class="nf">remove_employee</span><span class="p">(</span><span class="n">eid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Removes an employee from the database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        eid (int): The ID of the employee to be removed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># SQL query to delete the employee from the database</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;delete from employee where eid=</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">eid</span><span class="p">,)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Connect to the database</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="c1"># Execute the SQL query</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+        <span class="c1"># Commit the changes</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+        <span class="c1"># Close the cursor and connection</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="c1"># Print error information</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Clean up variables</span>
+        <span class="k">del</span> <span class="n">values</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span></div>
+
+
+
+
+
+<span class="c1"># Function to check whether the employee email already exists</span>
+<div class="viewcode-block" id="check_email">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.check_email">[docs]</a>
+<span class="k">def</span> <span class="nf">check_email</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the given email exists in the employee table.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        email (str): The email to check.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: The first row that matches the email, or None if no match is found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;SELECT * FROM employee WHERE email = </span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">email</span><span class="p">,)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">values</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<span class="c1"># Function to add an employee to the database</span>
+<div class="viewcode-block" id="add_employee">
+<a class="viewcode-back" href="../../backend.html#backend.adminbackend.add_employee">[docs]</a>
+<span class="k">def</span> <span class="nf">add_employee</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">passw</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add an employee to the database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): The name of the employee.</span>
+<span class="sd">        email (str): The email of the employee.</span>
+<span class="sd">        passw (str): The password of the employee.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Get the maximum employee ID from the database and increment it by 1</span>
+    <span class="n">eid</span> <span class="o">=</span> <span class="n">maxi</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">eid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">eid</span><span class="p">)</span>
+
+    <span class="c1"># SQL query to insert the employee into the database</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;insert into employee values(</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">, CURDATE(), </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">)&#39;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">eid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">passw</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        
+        <span class="c1"># Execute the SQL query and commit the changes</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">values</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="n">conn</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sufiyan Alam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

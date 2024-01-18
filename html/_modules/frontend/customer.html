@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>frontend.customer &mdash; FUTElibs:Library Management GUI APP 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FUTElibs:Library Management GUI APP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FUTElibs:Library Management GUI APP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">frontend.customer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for frontend.customer</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ttkbootstrap.constants</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ttkbootstrap.scrolled</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ttkbootstrap.tableview</span> <span class="kn">import</span> <span class="n">Tableview</span>
+<span class="kn">import</span> <span class="nn">ttkbootstrap</span> <span class="k">as</span> <span class="nn">ttkb</span>
+<span class="kn">from</span> <span class="nn">backend.customerbackend</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+
+
+
+
+<div class="viewcode-block" id="customer_frame">
+<a class="viewcode-back" href="../../frontend.html#frontend.customer.customer_frame">[docs]</a>
+<span class="k">def</span> <span class="nf">customer_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span><span class="n">user</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a customer frame in the given root window for the specified user.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - root: The root window in which the customer frame will be generated.</span>
+<span class="sd">    - user: An instance of the User class representing the customer.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">customer_pg_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span>
+    <span class="n">customer_pg_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span><span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">greet</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function greets the user based on the current time of day.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A string: &quot;Good morning&quot; if the current time is before 12 PM,</span>
+<span class="sd">            &quot;Good afternoon&quot; if the current time is between 12 PM and 5 PM,</span>
+<span class="sd">            and &quot;Good evening&quot; if the current time is after 5 PM.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">hour</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">hour</span>
+
+        <span class="k">if</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Good morning  &quot;</span>
+        <span class="k">elif</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">17</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Good afternoon  &quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Good evening  &quot;</span>
+
+    <span class="n">greetings</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">greet</span><span class="p">(),</span><span class="n">user</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+    <span class="n">greetings</span><span class="o">=</span><span class="n">greetings</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    
+
+    <span class="n">greeting_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">customer_pg_frame</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span>
+    <span class="n">greeting_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+
+    
+
+    <span class="n">customer_info_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">greeting_frame</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success&#39;</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">greetings</span><span class="p">)</span>
+    <span class="n">customer_info_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="c1">#id name doj</span>
+    <span class="n">customer_name_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">customer_info_frame</span><span class="p">)</span>
+    <span class="n">customer_name_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span><span class="n">padx</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">name_lb</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">customer_name_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>
+    <span class="n">name_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">customer_mid_doj_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">customer_info_frame</span><span class="p">)</span>
+    <span class="n">customer_mid_doj_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="n">RIGHT</span><span class="p">)</span>
+
+    <span class="n">mid_lb</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">customer_mid_doj_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;MID   :</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">user</span><span class="o">.</span><span class="n">getId</span><span class="p">(),</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">18</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>
+    <span class="n">mid_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">doj_lb</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">customer_mid_doj_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;DOJ:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">user</span><span class="o">.</span><span class="n">getDoj</span><span class="p">(),</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">18</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>
+    <span class="n">doj_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1">#seperator</span>
+    <span class="n">div_sep</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Separator</span><span class="p">(</span><span class="n">customer_pg_frame</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success&#39;</span><span class="p">)</span>
+    <span class="n">div_sep</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="n">padx</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1">#scrolledframe</span>
+    <span class="n">transaction_frame</span><span class="o">=</span><span class="n">ScrolledFrame</span><span class="p">(</span><span class="n">customer_pg_frame</span><span class="p">,</span><span class="n">autohide</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span>
+    <span class="n">transaction_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+
+    <span class="n">pending_issue_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">transaction_frame</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;info&#39;</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;PENDING ISSUES&#39;</span><span class="p">)</span>
+    <span class="n">pending_issue_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+
+    <span class="n">returned_issue_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">transaction_frame</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;info&#39;</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;RETURNED ISSUES&#39;</span><span class="p">)</span>
+    <span class="n">returned_issue_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+
+    <span class="n">pt_coldata</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;TID&#39;</span><span class="p">,</span><span class="s1">&#39;ISSUE DATE&#39;</span><span class="p">,</span><span class="s1">&#39;BOOK&#39;</span><span class="p">,</span><span class="s1">&#39;DAYS LEFT FOR RETURN&#39;</span><span class="p">,</span><span class="s1">&#39;DELAY (IN DAYS)&#39;</span><span class="p">,</span><span class="s1">&#39;FINE PAYABLE&#39;</span><span class="p">]</span>
+    <span class="n">pt_rowdata</span><span class="o">=</span><span class="n">pending</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">getId</span><span class="p">())</span>
+
+    <span class="n">pending_table</span><span class="o">=</span><span class="n">Tableview</span><span class="p">(</span><span class="n">pending_issue_frame</span><span class="p">,</span><span class="n">coldata</span><span class="o">=</span><span class="n">pt_coldata</span><span class="p">,</span><span class="n">rowdata</span><span class="o">=</span><span class="n">pt_rowdata</span><span class="p">,</span><span class="n">paginated</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">searchable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">autoalign</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>
+    
+    <span class="n">pending_table</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">rt_coldata</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;TID&#39;</span><span class="p">,</span><span class="s1">&#39;ISSUE DATE&#39;</span><span class="p">,</span><span class="s1">&#39;BOOK&#39;</span><span class="p">,</span><span class="s1">&#39;RETURN DATE&#39;</span><span class="p">,</span><span class="s1">&#39;DELAY&#39;</span><span class="p">,</span><span class="s1">&#39;FINE PAID&#39;</span><span class="p">]</span>
+    <span class="n">rt_rowdata</span><span class="o">=</span><span class="n">returned</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">getId</span><span class="p">())</span>
+
+    <span class="n">returned_table</span><span class="o">=</span><span class="n">Tableview</span><span class="p">(</span><span class="n">returned_issue_frame</span><span class="p">,</span><span class="n">coldata</span><span class="o">=</span><span class="n">rt_coldata</span><span class="p">,</span><span class="n">rowdata</span><span class="o">=</span><span class="n">rt_rowdata</span><span class="p">,</span><span class="n">paginated</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">searchable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">autoalign</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>
+    <span class="n">returned_table</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sufiyan Alam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

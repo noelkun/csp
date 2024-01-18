@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>frontend.homepage &mdash; FUTElibs:Library Management GUI APP 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FUTElibs:Library Management GUI APP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FUTElibs:Library Management GUI APP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">frontend.homepage</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for frontend.homepage</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ttkbootstrap.constants</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">import</span> <span class="nn">ttkbootstrap</span> <span class="k">as</span> <span class="nn">ttkb</span>
+<span class="kn">from</span> <span class="nn">ttkbootstrap.toast</span> <span class="kn">import</span> <span class="n">ToastNotification</span>
+<span class="kn">from</span> <span class="nn">backend.loginbackend</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">from</span> <span class="nn">middleware.userLibs</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">frontend.customer</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">from</span> <span class="nn">frontend.admin</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">from</span> <span class="nn">frontend.employee</span> <span class="kn">import</span><span class="o">*</span>
+<span class="kn">from</span> <span class="nn">backend.signupbackend</span> <span class="kn">import</span><span class="o">*</span>
+
+
+
+<div class="viewcode-block" id="homeframe">
+<a class="viewcode-back" href="../../frontend.html#frontend.homepage.homeframe">[docs]</a>
+<span class="k">def</span> <span class="nf">homeframe</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display the home frame with login buttons.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root: The root window.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">loginbtn</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to handle login button clicks.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user: The user type (admin, member, or employee).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">home_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>
+        <span class="n">login_pg_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">adminloginbtn</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to handle admin login button click.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loginbtn</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">memberloginbtn</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to handle member login button click.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loginbtn</span><span class="p">(</span><span class="s1">&#39;member&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">employeeloginbtn</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to handle employee login button click.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loginbtn</span><span class="p">(</span><span class="s1">&#39;employee&#39;</span><span class="p">)</span>
+
+    <span class="k">global</span> <span class="n">home_frame</span>
+    <span class="n">home_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span>
+    <span class="n">home_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+
+    <span class="n">header_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">home_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Welcome to FUTE libs&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+    <span class="n">header_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="n">login_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">header_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;LOGIN TO FUTElibs &#39;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span> <span class="mi">36</span><span class="p">),</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>
+    <span class="n">login_label</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">element_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">home_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;LOGIN AS&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+    <span class="n">element_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="n">admin_b</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">element_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;ADMIN LOGIN&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary-outline&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">adminloginbtn</span><span class="p">)</span>
+    <span class="n">admin_b</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">member_b</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">element_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;MEMBER LOGIN&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary-outline&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">memberloginbtn</span><span class="p">)</span>
+    <span class="n">member_b</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">employee_b</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">element_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;EMPLOYEE LOGIN&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary-outline&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">employeeloginbtn</span><span class="p">)</span>
+    <span class="n">employee_b</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+
+
+
+
+
+
+<div class="viewcode-block" id="login_pg_frame">
+<a class="viewcode-back" href="../../frontend.html#frontend.homepage.login_pg_frame">[docs]</a>
+<span class="k">def</span> <span class="nf">login_pg_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function creates a login page frame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root: The root window object.</span>
+<span class="sd">        user: The user object.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">User_login_frame_page</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span>
+    <span class="n">User_login_frame_page</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">signupframe_bt</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function handles the signup frame button click event.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">User_login_frame_page</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>
+        <span class="n">signup_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">loginlogic</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the login logic based on the user input.</span>
+<span class="sd">    </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the user input</span>
+        <span class="n">userdata</span> <span class="o">=</span> <span class="n">UserLibs</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email_ent</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">password</span><span class="o">=</span><span class="n">pass_ent</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+    
+        <span class="c1"># Call the login function and get the result</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="n">userdata</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+    
+        <span class="c1"># Check if the login was successful</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Update the userdata with the result</span>
+            <span class="n">userdata</span> <span class="o">=</span> <span class="n">UserLibs</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+    
+            <span class="c1"># Hide the login frame</span>
+            <span class="n">User_login_frame_page</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>
+    
+            <span class="c1"># Show different frames based on the user type</span>
+            <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;member&#39;</span><span class="p">:</span>
+                <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;login successful&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success&#39;</span><span class="p">)</span>
+                <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+                <span class="n">customer_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">userdata</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;admin&#39;</span><span class="p">:</span>
+                <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;login successful&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success&#39;</span><span class="p">)</span>
+                <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+                <span class="n">admin_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">userdata</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;employee&#39;</span><span class="p">:</span>
+                <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;login successful&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success&#39;</span><span class="p">)</span>
+                <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+                <span class="n">employee_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">userdata</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Update the element frame style to danger</span>
+            <span class="n">element_frame</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;danger&#39;</span><span class="p">)</span>
+            <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;wrong email/password&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;danger&#39;</span><span class="p">)</span>
+            <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+    
+    
+
+            
+    <span class="k">def</span> <span class="nf">return_btn</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return to the home frame.</span>
+<span class="sd">    </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Hide the login frame and show the home frame</span>
+        <span class="n">User_login_frame_page</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>
+        <span class="n">homeframe</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    
+    
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;member&#39;</span><span class="p">:</span>
+        <span class="n">lb_text</span> <span class="o">=</span> <span class="s1">&#39;MEMBER LOGIN PAGE&#39;</span>
+    <span class="k">elif</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;admin&#39;</span><span class="p">:</span>
+        <span class="n">lb_text</span> <span class="o">=</span> <span class="s1">&#39;ADMIN LOGIN PAGE&#39;</span>
+    <span class="k">elif</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;employee&#39;</span><span class="p">:</span>
+        <span class="n">lb_text</span> <span class="o">=</span> <span class="s1">&#39;EMPLOYEE LOGIN PAGE&#39;</span>
+    
+    
+    <span class="c1"># Create the header frame</span>
+    <span class="n">header_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">User_login_frame_page</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;WELCOME&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+    <span class="n">header_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+    
+    <span class="c1"># Create the back button</span>
+    <span class="n">back_bt</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">header_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;BACK&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary outline&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">return_btn</span><span class="p">)</span>
+    <span class="n">back_bt</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+    
+    <span class="c1"># Create the label for the login page</span>
+    <span class="n">User_lin_lb</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">header_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">lb_text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>
+    <span class="n">User_lin_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    
+    <span class="c1"># Create the element frame</span>
+    <span class="n">element_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">User_login_frame_page</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Login&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+    <span class="n">element_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    
+    <span class="c1"># Create the email frame</span>
+    <span class="n">email_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">element_frame</span><span class="p">)</span>
+    <span class="n">email_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+    
+    <span class="c1"># Create the password frame</span>
+    <span class="n">pass_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">element_frame</span><span class="p">)</span>
+    <span class="n">pass_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+    
+    <span class="c1"># Create the label for the email input</span>
+    <span class="n">email_lb</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">email_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Enter Email ID&#39;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+    <span class="n">email_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    
+    <span class="c1"># Create the email input field</span>
+    <span class="n">email_ent</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">email_frame</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+    <span class="n">email_ent</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">RIGHT</span><span class="p">)</span>
+    
+    <span class="c1"># Create the label for the password input</span>
+    <span class="n">pass_lb</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">pass_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Enter Password&#39;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+    <span class="n">pass_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    
+    <span class="c1"># Create the password input field</span>
+    <span class="n">pass_ent</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">pass_frame</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+    <span class="n">pass_ent</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">RIGHT</span><span class="p">)</span>
+    
+    <span class="c1"># Create the button frame</span>
+    <span class="n">button_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">element_frame</span><span class="p">)</span>
+    <span class="n">button_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">Y</span><span class="p">)</span>
+    
+    <span class="c1"># Create the login button</span>
+    <span class="n">login_b</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">button_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;LOGIN&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success-outline&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">loginlogic</span><span class="p">)</span>
+    <span class="n">login_b</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    
+    <span class="c1"># Create the signup button</span>
+    <span class="n">signup_b</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">button_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;SIGNUP&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;info-outline&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">signupframe_bt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;member&#39;</span><span class="p">:</span>
+        <span class="n">signup_b</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="signup_frame">
+<a class="viewcode-back" href="../../frontend.html#frontend.homepage.signup_frame">[docs]</a>
+<span class="k">def</span> <span class="nf">signup_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates and displays the signup frame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root: The root window object.</span>
+<span class="sd">        user: The user object.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">signup_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span>
+    <span class="n">signup_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">TRUE</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">return_btn</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles the return button click event.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">signup_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>
+        <span class="n">login_pg_frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">confirm_input_fx</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">passw</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles the confirm input function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cname: The name of the user.</span>
+<span class="sd">            email: The email of the user.</span>
+<span class="sd">            passw: The password of the user.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">confirm_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">tcl_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;CONFIRM USER CREATION QUERY&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">confirm_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">submit_input_fx</span><span class="p">():</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Handles the submit input function.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                None.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">add_user</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">passw</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+            <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;USER CREATED SUCCESSFULLY&quot;</span><span class="p">,</span>
+                                      <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success&#39;</span><span class="p">)</span>
+            <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+
+            
+            <span class="n">return_btn</span><span class="p">()</span>
+
+        <span class="c1"># Create the submit button</span>
+        <span class="n">m1</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">confirm_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;THE FOLLOWING USER IS TO BE CREATED&#39;</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">14</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>
+        <span class="n">m1</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Display the user&#39;s name</span>
+        <span class="n">cname_lb</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">confirm_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;  NAME: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">cname</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">cname_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Display the user&#39;s email</span>
+        <span class="n">email_lb</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">confirm_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;  EMAIL: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">email</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">email_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Display the user&#39;s password</span>
+        <span class="n">passw_lb</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">confirm_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;  PASSWORD: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">passw</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">passw_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Create the submit button</span>
+        <span class="n">submit_b</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">confirm_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;SUBMIT&#39;</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success-outline&#39;</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="n">submit_input_fx</span><span class="p">)</span>
+        <span class="n">submit_b</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">cinfo_input_fx</span><span class="p">():</span>
+        
+
+        <span class="k">def</span> <span class="nf">confirm_btn</span><span class="p">():</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            This function handles the confirmation of user creation.</span>
+<span class="sd">        </span>
+<span class="sd">            Returns:</span>
+<span class="sd">                None.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">check_email</span><span class="p">(</span><span class="n">email_ent</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">user</span><span class="p">)</span>
+        
+            <span class="k">if</span> <span class="n">var_cname</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="c1"># Show a toast message if the user name is empty</span>
+                <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;USER NAME CANNOT BE EMPTY&quot;</span><span class="p">,</span>
+                                          <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;danger&#39;</span><span class="p">)</span>
+                <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">var_email</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="c1"># Show a toast message if the user email is empty</span>
+                <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;USER EMAIL CANNOT BE EMPTY&quot;</span><span class="p">,</span>
+                                          <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;danger&#39;</span><span class="p">)</span>
+                <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">var_pass</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="c1"># Show a toast message if the user password is empty</span>
+                <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;USER PASSWORD CANNOT BE EMPTY&quot;</span><span class="p">,</span>
+                                          <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;danger&#39;</span><span class="p">)</span>
+                <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">result</span><span class="p">:</span>
+                <span class="c1"># Show a toast message if the user already exists</span>
+                <span class="n">toast</span> <span class="o">=</span> <span class="n">ToastNotification</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;FUTElibs toast message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;USER ALREADY EXISTS&quot;</span><span class="p">,</span>
+                                          <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;danger&#39;</span><span class="p">)</span>
+                <span class="n">toast</span><span class="o">.</span><span class="n">show_toast</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Call the confirm_input_fx function with the provided arguments</span>
+                <span class="n">confirm_input_fx</span><span class="p">(</span><span class="n">var_cname</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">var_email</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">var_pass</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+        <span class="c1"># Create a labelframe for user info</span>
+        <span class="n">cinfo_input_frame</span> <span class="o">=</span> <span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">tcl_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;USER INFO&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">cinfo_input_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+        
+        <span class="c1"># Create a labelframe for name input</span>
+        <span class="n">cname_input_frame</span> <span class="o">=</span> <span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">cinfo_input_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">cname_input_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+        
+        <span class="c1"># Create a label for name input</span>
+        <span class="n">cname_lb</span> <span class="o">=</span> <span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">cname_input_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Enter Name&#39;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">cname_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Limiting the input for name</span>
+        <span class="n">var_cname</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="n">max_len_cname</span> <span class="o">=</span> <span class="mi">20</span>
+        
+        <span class="k">def</span> <span class="nf">on_enter_name</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Callback function to limit the length of the input for name.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">var_cname</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_len_cname</span><span class="p">:</span>
+                <span class="n">var_cname</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="n">max_len_cname</span><span class="p">])</span>
+        
+        <span class="n">var_cname</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">on_enter_name</span><span class="p">)</span>
+
+
+        <span class="n">name_ent</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">cname_input_frame</span><span class="p">,</span><span class="n">textvariable</span><span class="o">=</span><span class="n">var_cname</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">name_ent</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+
+        <span class="n">email_input_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">cinfo_input_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;EMAIL&#39;</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">email_input_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="n">email_lb</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">email_input_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Enter Email&#39;</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">email_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1">#limiting the input for email</span>
+        <span class="n">var_email</span><span class="o">=</span><span class="n">StringVar</span><span class="p">()</span>
+
+        <span class="n">max_len_email</span><span class="o">=</span><span class="mi">25</span>
+        <span class="k">def</span> <span class="nf">on_enter_email</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Sets the value of the email variable to a substring of the given email string if the length of the email string is greater than the maximum allowed length.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">            - args: The arguments passed to the function. No arguments are used in this function.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">            - None</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">var_email</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">&gt;</span><span class="n">max_len_email</span><span class="p">:</span>
+                <span class="n">var_email</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="n">max_len_email</span><span class="p">])</span>
+
+        <span class="n">var_email</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="n">on_enter_email</span><span class="p">)</span>
+
+        <span class="n">email_ent</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">email_input_frame</span><span class="p">,</span><span class="n">textvariable</span><span class="o">=</span><span class="n">var_email</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">email_ent</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+
+        <span class="n">pass_input_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">cinfo_input_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;PASSWORD&#39;</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">pass_input_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="n">pass_lb</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">pass_input_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Enter Password&#39;</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>
+        <span class="n">pass_lb</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1">#limiting the input for password</span>
+        <span class="n">var_pass</span><span class="o">=</span><span class="n">StringVar</span><span class="p">()</span>
+
+        <span class="n">max_len_pass</span><span class="o">=</span><span class="mi">20</span>
+        <span class="k">def</span> <span class="nf">on_enter_pass</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Function to handle the &#39;on_enter_pass&#39; event.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                *args: Variable number of arguments.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                None.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">var_pass</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">&gt;</span><span class="n">max_len_pass</span><span class="p">:</span>
+                <span class="n">var_pass</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="n">max_len_pass</span><span class="p">])</span>
+
+        <span class="n">var_pass</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="n">on_enter_pass</span><span class="p">)</span>
+
+        <span class="c1"># Create a pass_ent Entry widget for password input</span>
+        <span class="n">pass_ent</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">pass_input_frame</span><span class="p">,</span><span class="n">textvariable</span><span class="o">=</span><span class="n">var_pass</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">,</span><span class="n">show</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="n">pass_ent</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+
+        <span class="c1"># Create a cinfo_cn_bt Button widget for confirmation</span>
+        <span class="n">cinfo_cn_bt</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">cinfo_input_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;CONFIRM&#39;</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;success-outline&#39;</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="n">confirm_btn</span><span class="p">)</span>
+        <span class="n">cinfo_cn_bt</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="n">BOTTOM</span><span class="p">)</span>
+
+
+
+
+
+
+
+
+
+
+    <span class="k">if</span> <span class="n">user</span><span class="o">==</span><span class="s1">&#39;admin&#39;</span><span class="p">:</span>  <span class="c1"># Check if the user is an admin</span>
+        <span class="n">lb_text</span><span class="o">=</span><span class="s1">&#39;ADMIN SIGNUP&#39;</span>
+    <span class="k">elif</span> <span class="n">user</span><span class="o">==</span><span class="s1">&#39;member&#39;</span><span class="p">:</span>  <span class="c1"># Check if the user is a member</span>
+        <span class="n">lb_text</span><span class="o">=</span><span class="s1">&#39;MEMBER SIGNUP&#39;</span>
+
+    
+    <span class="n">header_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">signup_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">lb_text</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>  <span class="c1"># Create a labelframe for the header with the appropriate text</span>
+    <span class="n">header_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="n">back_btn</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">header_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;BACK&#39;</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary-outline&#39;</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="n">return_btn</span><span class="p">)</span>  <span class="c1"># Create a button for going back</span>
+    <span class="n">back_btn</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">signup_label</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">header_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">lb_text</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="mi">32</span><span class="p">),</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">)</span>  <span class="c1"># Create a label for the signup text</span>
+    <span class="n">signup_label</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">element_frame</span><span class="o">=</span><span class="n">ttkb</span><span class="o">.</span><span class="n">Labelframe</span><span class="p">(</span><span class="n">signup_frame</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;SIGNUP&#39;</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">)</span>  <span class="c1"># Create a labelframe for the signup elements</span>
+    <span class="n">element_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">expand</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+
+
+    <span class="n">tcl_frame</span><span class="o">=</span><span class="n">ScrolledFrame</span><span class="p">(</span><span class="n">element_frame</span><span class="p">,</span><span class="n">autohide</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">bootstyle</span><span class="o">=</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span>  <span class="c1"># Create a scrolled frame for the signup elements</span>
+    <span class="n">tcl_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span><span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+    <span class="n">cinfo_input_fx</span><span class="p">()</span>  <span class="c1"># Call the cinfo_input_fx function to handle the signup inputs</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sufiyan Alam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
